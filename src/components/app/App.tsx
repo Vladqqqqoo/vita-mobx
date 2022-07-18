@@ -1,10 +1,11 @@
 import React from "react";
 import { action } from "mobx";
-import { useRootStore } from "../store/storeContext";
-import { UsersCounter } from "./usersCounter";
-import { UserList } from "./userList";
+import { useRootStore } from "../../store/storeContext";
+import { UsersCounter } from "../usersCounter";
+import { UserList } from "../userList";
 
-const App = function App() {
+//todo: we don't need here observer as we use only actions, need to undestand how to fix
+export function App() {
     const store = useRootStore();
     //if a component don't use observable values, we don't need to wrap in observer function
     //in our case we use only handlers for state changing which are wrapped in action,

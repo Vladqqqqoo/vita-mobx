@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { configure } from "mobx";
 
-import App from "./components/App";
+import App from "./components/app/App";
 import "./index.css";
 import { RootStore } from "./store/RootStore";
 import { RootStoreProvider } from "./store/storeContext";

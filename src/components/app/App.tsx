@@ -32,6 +32,4 @@ export function App() {
             <UsersCounter />
         </div>
     );
-};
-
-export default App;
+}

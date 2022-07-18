@@ -5,7 +5,7 @@ export class RootStore {
     public readonly userStore: UserStore;
 
     constructor() {
-        makeAutoObservable(this);
+        //no need to use makeautoobesrvable
         this.userStore = new UserStore();
     }
 }

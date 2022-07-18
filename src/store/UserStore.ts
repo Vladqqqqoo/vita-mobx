@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { autorun, IReactionDisposer, makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 
 type User = {
@@ -9,15 +9,26 @@ type User = {
 
 export class UserStore {
     users: User[] = [];
+    usersCountDisposer: IReactionDisposer;
 
     constructor() {
         makeAutoObservable(this);
+
+        //it's better to clean autorun, reaction and when after we don't need it, because
+        //they subscribe for observer values forever.
+        //in this case autorun subscribe only on its own values, so it means after UserStore instance
+        // will be destroyed autorun will dispose
+        this.usersCountDisposer = autorun(() => {
+            console.log("The amount of users has changed");
+            console.log("Current amount is", this.usersCount);
+        });
     }
 
     fetchUsers = () => {
         axios
             .get("https://jsonplaceholder.typicode.com/users")
             .then(({ data: users }) => {
+                //no need to use special named action (otherwise context warning)
                 runInAction(() => {
                     this.users = users;
                 });
@@ -41,4 +52,8 @@ export class UserStore {
     get usersCount(): number {
         return this.users.length;
     }
+
+    dispose = () => {
+        this.usersCountDisposer();
+    };
 }
